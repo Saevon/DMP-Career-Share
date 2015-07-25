@@ -6,6 +6,7 @@ import json
 from parser_data import InlineList, DuplicationList
 from state import State, StateMachine
 from type_check import is_int, is_float
+from format import format
 
 
 
@@ -100,7 +101,7 @@ class DictState(DataState):
         if val == '}':
             self.debug('= CLOSED = ')
             if not self.data.get(self.name, False):
-                self.data[self.name] = []
+                self.data[self.name] = DuplicationList()
             self.data.get(self.name).append(self.val)
 
             self.depth -= 1
@@ -112,21 +113,55 @@ class DictState(DataState):
             )
 
 
-def load(fp):
-    machine = ParserStateMachine({
+def load(fp, options=None):
+    config = {
         # 'verbose': True,
-    })
+    }
+    if options is not None:
+        config.update(options)
+
+    machine = ParserStateMachine(config)
     machine.runAll(fp)
 
     return machine.get_data()
 
+def dump(data, options=None):
+    config = {
+        # 'verbose': True,
+    }
+    if options is not None:
+        config.update(options)
+
+    lines = []
+    for key, val in data.iteritems():
+        lines += format(key, val)
+
+    # Adds Trailing newline
+    lines.append('')
+
+    return '\n'.join(lines)
+
+
+def _test(infile, outfile):
+    with open(infile, 'r') as fp:
+        data = load(fp)
+
+    # print json.dumps(data, indent=4)
+
+    with open(outfile, 'w') as fp:
+        out = dump(data)
+        fp.write(out)
+
+    import subprocess
+    subprocess.call(['diff', infile, outfile])
+    subprocess.call(['rm', outfile])
+
 
 if __name__ == "__main__":
-    with open('../Universe/Scenarios/Saevon/ProgressTracking.txt', 'r') as fp:
-        data = load(fp)
-        print json.dumps(data, indent=4)
-        print
+    infile = '../Universe/Scenarios/Saevon/ProgressTracking.txt'
+    outfile = './tmp.txt'
+    _test(infile, outfile)
 
-    # with open('../Universe/Scenarios/Saevon/ResearchAndDevelopment.txt', 'r') as fp:
-    #     data = load(fp)
-    #     print json.dumps(data, indent=4)
+
+    infile = '../Universe/Scenarios/Saevon/ResearchAndDevelopment.txt'
+    _test(infile, outfile)

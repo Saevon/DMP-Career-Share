@@ -4,6 +4,7 @@ from cascade import cascade
 
 
 class VerboseMixin(object):
+
     def __init__(self):
         self.__verbose = False
 
@@ -179,5 +180,5 @@ class State(VerboseMixin):
         Runs the state parser
             Overwrite this method in subclasses
         '''
-        raise NotImplemented
+        raise NotImplementedError
 
