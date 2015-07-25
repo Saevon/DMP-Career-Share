@@ -90,7 +90,9 @@ def format_unnamed(val):
     elif isinstance(val, bool):
         out = str(val)
     elif isinstance(val, InlineList):
-        out = ', '.join([format_unnamed(subval) for subval in val])
+        join_str = ', ' if val.space_formatted else ','
+
+        out = join_str.join([format_unnamed(subval) for subval in val])
     elif isinstance(val, float):
         # Floats get to have at most 12 digit precision
         # However if it needs to strip any trailing zeros (and the decimal point if its basically an int)

@@ -60,9 +60,13 @@ class NeutralState(DataState):
 
     def read_data(self, val):
         if ',' in val:
+            space_formatted = ', ' in val
+
             val = [subval.strip() for subval in val.split(',')]
             val = [self.read_data(subval) for subval in val]
             val = InlineList(val)
+
+            val.space_formatted = space_formatted
         elif val == 'True':
             val = True
         elif val == 'False':
@@ -70,7 +74,6 @@ class NeutralState(DataState):
         elif is_int(val):
             val = int(val)
         elif is_float(val):
-            old_val = val
             val = Decimal(val)
 
         return val
