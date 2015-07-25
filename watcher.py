@@ -10,6 +10,8 @@ from timer import TimerThread
 
 from lock import with_threading_lock
 
+import parser
+
 
 class DataFile(object):
 
@@ -29,7 +31,9 @@ class DataFile(object):
     def on_data(self, path):
         self.status = self.STATUS_UPDATED
 
-        # TODO: parse
+        with open(self.path, 'r') as fp:
+            self.data = parser.load(fp)
+
 
     def on_parsed(self):
         self.status == self.STATUS_LOADED
