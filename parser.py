@@ -149,10 +149,14 @@ def _test(infile, outfile):
     with open(infile, 'r') as fp:
         data = load(fp)
 
+    with open(infile, 'r') as fp:
+        raw = fp.read()
+
     # print json.dumps(data, indent=4)
 
+    out = dump(data)
+
     with open(outfile, 'w') as fp:
-        out = dump(data)
         fp.write(out)
 
     import subprocess
@@ -161,10 +165,24 @@ def _test(infile, outfile):
 
 
 if __name__ == "__main__":
-    infile = '../Universe/Scenarios/Saevon/ProgressTracking.txt'
+    ALL_DATA = [
+        "ContractSystem.txt",
+        "Funding.txt",
+        "PCScenario.txt",
+        "ProgressTracking.txt",
+        "Reputation.txt",
+        "ResearchAndDevelopment.txt",
+        "ResourceScenario.txt",
+        "ScenarioDestructibles.txt",
+        "ScenarioNewGameIntro.txt",
+        "ScenarioUpgradeableFacilities.txt",
+        "StrategySystem.txt",
+        "VesselRecovery.txt",
+    ]
+
     outfile = './tmp.txt'
-    _test(infile, outfile)
 
-
-    infile = '../Universe/Scenarios/Saevon/ResearchAndDevelopment.txt'
-    _test(infile, outfile)
+    import os.path
+    for filename in ALL_DATA:
+        infile = os.path.join('../Universe/Scenarios/Saevon/', filename)
+        _test(infile, outfile)
