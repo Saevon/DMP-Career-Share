@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 from collections import OrderedDict
+from decimal import Decimal
 import json
 
 from parser_data import InlineList, DuplicationList
@@ -69,7 +70,8 @@ class NeutralState(DataState):
         elif is_int(val):
             val = int(val)
         elif is_float(val):
-            val = float(val)
+            old_val = val
+            val = Decimal(val)
 
         return val
 
@@ -83,7 +85,6 @@ class DictState(DataState):
         self.run = self.state_name
 
     def state_name(self, val):
-        # print 'name'
         self.debug('= NAME = ')
 
         self.name = val
