@@ -36,15 +36,18 @@ class NeutralState(DataState):
         if '=' in line:
             key, val = [val.strip() for val in line.split('=')]
 
-            # Check if the data exists, in which case its actually a list so we have to change its type
             old_data = self.data.get(key, None)
             if old_data is None:
+                # First time we got said data, just add it in
                 self.data[key] = self.read_data(val)
-            elif not isinstance(old_data, DuplicationList):
-                val = self.data[key]
-                self.data[key] = DuplicationList()
+            elif isinstance(old_data, DuplicationList):
+                # The stored data is a list, append to it
                 self.data[key].append(val)
             else:
+                # We got the same key? Turn the stored data into a list
+                old_val = self.data[key]
+                self.data[key] = DuplicationList()
+                self.data[key].append(old_val)
                 self.data[key].append(val)
 
             return self.finish_state()
