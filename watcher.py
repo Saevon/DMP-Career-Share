@@ -21,7 +21,7 @@ class DataFile(object):
 
     def __init__(self, name, path):
         self.name = name
-        self.path = path
+        self.path = os.path.join(path, name)
         self.status = self.STATUS_NOT_FOUND
         self.data = None
 
@@ -64,13 +64,14 @@ class Profile(object):
 
         self.data = {}
         for name in self.ALL_DATA:
-            self.data[name] = DataFile(name, os.path.join(self.base_path, name))
+            self.data[name] = DataFile(name, os.path.join(self.base_path, self.name))
 
         self.timer = TimerThread(self.parse_files)
         self.timer.start()
 
     def stop(self):
-        self.timer.stop()
+        if getattr(self, 'timer', False):
+            self.timer.stop()
 
         # TODO: should we do one last merge?
         self.parse_files()
@@ -102,7 +103,11 @@ class ProfileHandler(FileSystemEventHandler):
         self.base_path = base_path
 
         # Scan the folder on init
-        self.load_profiles()
+        try:
+            self.load_profiles()
+        except:
+            self.stop()
+            raise
 
     def load_profiles(self):
         '''
@@ -115,9 +120,12 @@ class ProfileHandler(FileSystemEventHandler):
 
             path = os.path.join(self.base_path, folder)
 
-            files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(self.base_path, folder, f))]
-            for file in files:
-                self.profiles[folder].update_file(file)
+            for filename in os.listdir(path):
+                fp = os.path.join(path, filename)
+                if not os.path.isfile(fp):
+                    continue
+
+                self.profiles[folder].update_file(filename)
 
 
     def on_created(self, event):
