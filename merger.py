@@ -1,15 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 from collections import OrderedDict
+from decimal import Decimal
 from parser_data import DuplicationList
 
+from error import DMPException
 
-DIFFICULTY = 0.7
+
+DIFFICULTY = Decimal(0.7)
+
+class MergeException(DMPException):
+    pass
 
 def merge(initial, current, server):
     '''
     Merges as a three way diff, updating all three to the new value
     '''
+
+    try:
+        _merge(initial, current, server)
+    except Exception as err:
+        raise MergeException.wrap(err)
+
+
+def _merge(initial, current, server):
 
     #########################################
     # Funds
@@ -28,27 +42,23 @@ def merge(initial, current, server):
     #########################################
     # Reputation
     new_rep = merge_diff(
-        initial["Reputation.txt"].data["reps"],
-        current["Reputation.txt"].data["reps"],
-        server["Reputation.txt"].data["reps"],
+        initial["Reputation.txt"].data["rep"],
+        current["Reputation.txt"].data["rep"],
+        server["Reputation.txt"].data["rep"],
     )
 
-    initial["Reputation.txt"].data["reps"] = new_rep
-    current["Reputation.txt"].data["reps"] = new_rep
-    server["Reputation.txt"].data["reps"] = new_rep
+    initial["Reputation.txt"].data["rep"] = new_rep
+    current["Reputation.txt"].data["rep"] = new_rep
+    server["Reputation.txt"].data["rep"] = new_rep
 
 
     #########################################
     # Science
     new_sci = merge_diff(
-        initial["Reputation.txt"].data["sci"],
-        current["Reputation.txt"].data["sci"],
-        server["Reputation.txt"].data["sci"],
+        initial["ResearchAndDevelopment.txt"].data["sci"],
+        current["ResearchAndDevelopment.txt"].data["sci"],
+        server["ResearchAndDevelopment.txt"].data["sci"],
     )
-
-    initial["Reputation.txt"].data["sci"] = new_sci
-    current["Reputation.txt"].data["sci"] = new_sci
-    server["Reputation.txt"].data["sci"] = new_sci
 
     fund_refund, new_techs = merge_techs(
         initial["ResearchAndDevelopment.txt"].data["Tech"],
@@ -86,9 +96,9 @@ def merge(initial, current, server):
     #########################################
     # Buildings
     new_lvls = merge_building_upgrades(
-        initial["ScenarioUpgradeableFacilities.txt"],
-        current["ScenarioUpgradeableFacilities.txt"],
-        server["ScenarioUpgradeableFacilities.txt"],
+        initial["ScenarioUpgradeableFacilities.txt"].data,
+        current["ScenarioUpgradeableFacilities.txt"].data,
+        server["ScenarioUpgradeableFacilities.txt"].data,
     )
     for building, lvl in new_lvls:
         initial["ScenarioUpgradeableFacilities.txt"].data[building]["lvl"] = lvl
@@ -96,9 +106,9 @@ def merge(initial, current, server):
         server["ScenarioUpgradeableFacilities.txt"].data[building]["lvl"] = lvl
 
     new_status = merge_building_status(
-        initial["ScenarioDestructibles.txt"],
-        current["ScenarioDestructibles.txt"],
-        server["ScenarioDestructibles.txt"],
+        initial["ScenarioDestructibles.txt"].data,
+        current["ScenarioDestructibles.txt"].data,
+        server["ScenarioDestructibles.txt"].data,
     )
     for building, status in new_status:
         initial["ScenarioDestructibles.txt"].data[building]["intact"] = status
@@ -116,10 +126,13 @@ def merge_building_upgrades(initial, current, server):
 
     for key in initial.keys():
         # Ignore non-building keys
+        if not isinstance(initial[key], dict):
+            continue
         if initial[key].get('lvl', None) is None:
             continue
 
         if current[key]["lvl"] != initial[key]["lvl"]:
+            # User upgraded
             if initial[key]["lvl"] != server[key]["lvl"]:
                 print "WARNING: Player upgraded %(key)s (%(initial)s >> %(current)s) server upgraded (%(initial)s >> %(server)s)" % {
                     'key': key,
@@ -129,6 +142,9 @@ def merge_building_upgrades(initial, current, server):
                 }
 
             buildings[key] = max(current[key]["lvl"], server[key]["lvl"])
+        else:
+            # Nothing changed, use the server value
+            buildings[key] = server[key]["lvl"]
 
     return buildings
 
@@ -139,6 +155,8 @@ def merge_building_status(initial, current, server):
 
     for key in initial.keys():
         # Ignore non-building keys
+        if not isinstance(initial[key], dict):
+            continue
         if initial[key].get('intact', None) is None:
             continue
 
@@ -189,7 +207,11 @@ def merge_reputation(init_rep, cur_rep, server_rep):
 # Science
 #########################################################################################################################
 
-def list_to_map(initial, current, server, id_func):
+def list_to_map(initial, current, server, id_func=None):
+    if id_func is None:
+        def id_func(val):
+            return val['id']
+
     item_map = {
         'initial': {},
         'current': {},
@@ -199,9 +221,9 @@ def list_to_map(initial, current, server, id_func):
 
     # First create a mapping for techs (for easier comparison)
     mapping = (
-        initial, 'initial',
-        current, 'current',
-        server, 'server',
+        (initial, 'initial'),
+        (current, 'current'),
+        (server, 'server'),
     )
     for data, key in mapping:
         for report in data:
@@ -217,7 +239,7 @@ def merge_reports(initial, current, server):
     Merges reports based on report_id
     Expects two dictionaries of reports where each report is a dictionary
     """
-    report_map, all_reports = list_to_map(initial, current, server, lambda v: v.id)
+    report_map, all_reports = list_to_map(initial, current, server)
 
     # Now merge each report
     total_refund = 0
@@ -283,7 +305,7 @@ def merge_techs(initial, current, server):
     Merges all researched tech.
     Returns the refund that should be applied, and a new techs list to replace the old one
     '''
-    tech_map, all_techs = list_to_map(initial, current, server, lambda v: v.id)
+    tech_map, all_techs = list_to_map(initial, current, server)
 
     # Now merge each tech
     total_refund = 0

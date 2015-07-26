@@ -1,132 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 import time
-import os.path
+import os
 
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-from timer import TimerThread
-
-from lock import with_threading_lock
-
-import parser
+from profile import ProfileHandler
 
 
-class DataFile(object):
-
-    STATUS_NOT_FOUND = "not_found"
-    STATUS_LOADED = "loaded"
-    STATUS_UPDATED = "updated"
-
-    def __init__(self, name, path):
-        self.name = name
-        self.path = os.path.join(path, name)
-        self.status = self.STATUS_NOT_FOUND
-        self.data = None
-
-    def is_ready(self):
-        return self.status == self.STATUS_UPDATED
-
-    def on_data(self, path):
-        self.status = self.STATUS_UPDATED
-
-        with open(self.path, 'r') as fp:
-            self.data = parser.load(fp)
-
-
-    def on_parsed(self):
-        self.status == self.STATUS_LOADED
-
-class Profile(object):
-
-    ALL_DATA = [
-        "ContractSystem.txt",
-        "Funding.txt",
-        "PCScenario.txt",
-        "ProgressTracking.txt",
-        "Reputation.txt",
-        "ResearchAndDevelopment.txt",
-        "ResourceScenario.txt",
-        "ScenarioDestructibles.txt",
-        "ScenarioNewGameIntro.txt",
-        "ScenarioUpgradeableFacilities.txt",
-        "StrategySystem.txt",
-        "VesselRecovery.txt",
-    ]
-
-    FILE_TIMEOUT = 4
-
-    def __init__(self, name, base_path):
-        print "New Profile: ", name
-        self.name = name
-        self.base_path = base_path
-
-        self.data = {}
-        for name in self.ALL_DATA:
-            self.data[name] = DataFile(name, os.path.join(self.base_path, self.name))
-
-        self.timer = TimerThread(self.parse_files)
-        self.timer.start()
-
-    def stop(self):
-        if getattr(self, 'timer', False):
-            self.timer.stop()
-
-        # TODO: should we do one last merge?
-        self.parse_files()
-
-    @with_threading_lock('data_files')
-    def update_file(self, path):
-        if path not in self.data:
-            return
-
-        print self.name, "updated", path
-
-        self.data[path].on_data(os.path.join(self.base_path, self.name, path))
-
-        # Waits for the timer to finish
-        if not self.timer.is_on():
-            self.timer.set(self.FILE_TIMEOUT)
-
-    @with_threading_lock('data_files')
-    def parse_files(self):
-        print "Running Merger"
-
-
-class ProfileHandler(FileSystemEventHandler):
-
-    def __init__(self, base_path):
-        super(ProfileHandler, self).__init__()
-
-        self.profiles = {}
-        self.base_path = base_path
-
-        # Scan the folder on init
-        try:
-            self.load_profiles()
-        except:
-            self.stop()
-            raise
-
-    def load_profiles(self):
-        '''
-        Loads the profiles and their files that currently exist in the system
-        '''
-        folders = [f for f in os.listdir(self.base_path) if not os.path.isfile(os.path.join(self.base_path, f))]
-
-        for folder in folders:
-            self.profiles[folder] = Profile(folder, self.base_path)
-
-            path = os.path.join(self.base_path, folder)
-
-            for filename in os.listdir(path):
-                fp = os.path.join(path, filename)
-                if not os.path.isfile(fp):
-                    continue
-
-                self.profiles[folder].update_file(filename)
-
+class ProfileWatchHandler(FileSystemEventHandler):
 
     def on_created(self, event):
         '''
@@ -139,7 +22,7 @@ class ProfileHandler(FileSystemEventHandler):
         name = parts[0]
 
         if len(parts) == 1:
-            self.profiles[name] = Profile(name, self.base_path)
+            self.load_profile(name)
         elif len(parts) == 2:
             self.profiles[name].update_file(parts[1])
         else:
@@ -164,23 +47,49 @@ class ProfileHandler(FileSystemEventHandler):
         else:
             print "Warning: Subdirectories have been edited"
 
-    def stop(self):
-        for key, profile in self.profiles.iteritems():
-            profile.stop()
 
 
-if __name__ == "__main__":
-    path = '/Users/Saevon/Applications/Kerbal Space Program/DMPServer/Universe/Scenarios'
-    observer = Observer()
+from optparse import OptionParser
+app_parser = OptionParser(usage="usage: %prog profile_path server_profile_path")
 
-    profile_handler = ProfileHandler(path)
-    observer.schedule(profile_handler, path, recursive=True)
-    observer.start()
+def parse_options():
+    '''
+    Reads any commandline options, returning a final dict of options
+    '''
+    (options, args) = app_parser.parse_args()
+
+    if len(args) != 2:
+        app_parser.error("Too many arguments")
+
+    # Remove any unset options, using the defaults defined earlier instead
+    options = vars(options)
+    options = dict((key, options[key]) for key in options if options[key] is not None)
+
+    options['path'] = args[0]
+    options['initial_path'] = args[1]
+
+    return options
+
+def run(options):
+    parse_options
 
     try:
+        profile_handler = ProfileWatchHandler(options['path'], options['initial_path'])
+
+        observer = Observer()
+        observer.schedule(profile_handler, options['path'], recursive=True)
+        observer.start()
+
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
+        print "Exiting"
         profile_handler.stop()
         observer.stop()
+
+    print "Waiting for threads to die"
     observer.join()
+
+if __name__ == '__main__':
+    options = parse_options()
+    run(options)

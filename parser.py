@@ -8,6 +8,7 @@ from parser_data import InlineList, DuplicationList
 from state import State, StateMachine
 from type_check import is_int, is_float
 from format import format
+from error import DMPException
 
 
 
@@ -128,7 +129,10 @@ def load(fp, options=None):
         config.update(options)
 
     machine = ParserStateMachine(config)
-    machine.runAll(fp)
+    try:
+        machine.runAll(fp)
+    except State.Error as err:
+        raise DMPException.wraps(err)
 
     return machine.get_data()
 
