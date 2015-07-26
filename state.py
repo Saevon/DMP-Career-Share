@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
-from cascade import cascade
+from lib.cascade import cascade
 
 
 class VerboseMixin(object):

@@ -5,7 +5,7 @@ import os.path
 
 from timer import TimerThread
 
-from lock import with_threading_lock, get_threading_lock
+from lib.lock import with_threading_lock, get_threading_lock
 
 import parser
 import merger
