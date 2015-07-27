@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 from collections import OrderedDict
 from decimal import Decimal
-import json
 
 from parser_data import InlineList, DuplicationList
 from state import State, StateMachine

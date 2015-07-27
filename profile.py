@@ -225,9 +225,12 @@ class DualProfile(Profile):
 
             # Finish the parse
             for name in self.ALL_DATA:
-            #     self.data[name].save()
+                self.server_profile.data.save()
+                self.data[name].save()
+                self.initial[name].save()
+
+                self.server_profile.data.on_parsed()
                 self.data[name].on_parsed()
-            #     self.initial[name].save()
                 self.initial[name].on_parsed()
 
     def _update_file(self, path):
@@ -280,6 +283,8 @@ class ProfileHandler(object):
 
         self.enable_timer = enable_timer
 
+        self.server_profile = None
+
         # Scan the folder on init
         try:
             self.load_profiles()
@@ -287,18 +292,24 @@ class ProfileHandler(object):
             self.stop()
             raise
 
+
     @cascade
     def load_profiles(self):
         '''
         Loads the profiles and their files that currently exist in the system
         '''
-        self.server_profile = self.load_profile(self.SERVER_PROFILE)
+        if self.server_profile is None:
+            self.server_profile = self.load_profile(self.SERVER_PROFILE)
 
         folders = [f for f in os.listdir(self.base_path) if not os.path.isfile(os.path.join(self.base_path, f))]
 
         for folder in folders:
             if folder == self.SERVER_PROFILE:
                 continue
+
+            if folder in self.profiles.keys():
+                continue
+
             self.load_profile(folder)
 
     def load_profile(self, folder):
