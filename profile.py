@@ -364,3 +364,17 @@ class ProfileHandler(object):
 
         profile.merge()
 
+    @cascade
+    def merge_all(self):
+        '''
+        Runs a full merge of the system
+        '''
+        # Note: Do this twice, to ensure all profiles are up to date
+        # Since each merge updates the current player only to the ones already merged
+
+        for key, profile in self.profiles.iteritems():
+            self.merge_profile(profile)
+
+        for key, profile in self.profiles.iteritems():
+            self.merge_profile(profile)
+

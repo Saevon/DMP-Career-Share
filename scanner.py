@@ -45,6 +45,7 @@ def parse_options():
 
 JOIN_RE = re.compile(r'Client ([^ ]+?) handshook successfully')
 EXIT_RE = re.compile(r'Client ([^ ]+?) disconnected')
+DEAD_RE = re.compile(r'Goodbye!')
 
 def reader(profile_handler, line):
     match = JOIN_RE.match(line)
@@ -61,6 +62,10 @@ def reader(profile_handler, line):
 
         print "EXIT: %s" % name
         profile_handler.merge_profile(name)
+
+    match = DEAD_RE.match(line)
+    if match:
+        profile_handler.merge_all()
 
 
 import select
