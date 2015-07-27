@@ -74,7 +74,7 @@ def run(options):
     parse_options
 
     try:
-        profile_handler = ProfileWatchHandler(options['path'], options['initial_path'])
+        profile_handler = ProfileWatchHandler(options['path'], options['initial_path'], enable_timer=True)
 
         observer = Observer()
         observer.schedule(profile_handler, options['path'], recursive=True)

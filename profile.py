@@ -69,7 +69,7 @@ class Profile(object):
 
     FILE_TIMEOUT = 4
 
-    def __init__(self, name, base_path, enable_timer=True):
+    def __init__(self, name, base_path, enable_timer=False):
         print "%s New Profile" % (name)
         self.name = name
         self.base_path = base_path
@@ -150,7 +150,7 @@ class DualProfile(Profile):
     def set_server(self, server_profile):
         self.server_profile = server_profile
 
-    def __init__(self, name, base_path, initial_path, enable_timer=True):
+    def __init__(self, name, base_path, initial_path, enable_timer=False):
         super(DualProfile, self).__init__(name, base_path, enable_timer)
 
         self.initial_path = initial_path
@@ -189,7 +189,7 @@ class ProfileHandler(object):
 
     SERVER_PROFILE = 'Initial'
 
-    def __init__(self, base_path, initial_path, enable_timer=True):
+    def __init__(self, base_path, initial_path, enable_timer=False):
         super(ProfileHandler, self).__init__()
 
         self.profiles = {}
