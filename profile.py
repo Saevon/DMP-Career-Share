@@ -32,7 +32,7 @@ class DataFile(object):
         return self.status == self.STATUS_UPDATED
 
     @cascade
-    def on_data(self):
+    def refresh(self):
         self.status = self.STATUS_UPDATED
 
         with open(self.path, 'r') as fp:
@@ -111,7 +111,7 @@ class Profile(object):
             self.timer.set(self.FILE_TIMEOUT)
 
     def _update_file(self, path):
-        self.data[path].on_data()
+        self.data[path].refresh()
 
     def on_timer_end(self):
         print "%s: Running Merger" % self.name
@@ -139,7 +139,7 @@ class Profile(object):
         Reloads all the data files for the profile
         '''
         for data_file in self.all_files:
-            data_file.on_data()
+            data_file.refresh()
 
 
 
@@ -181,8 +181,8 @@ class DualProfile(Profile):
         if not os.path.exists(self.initial[path].path):
             subprocess.call(['cp', self.data[path].path, self.initial[path].path])
 
-        self.initial[path].on_data()
-        self.data[path].on_data()
+        self.initial[path].refresh()
+        self.data[path].refresh()
 
 
 class ProfileHandler(object):
