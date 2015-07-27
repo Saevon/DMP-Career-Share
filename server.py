@@ -42,7 +42,6 @@ def sync(name):
     Shows the data in the root folder
     '''
     try:
-        print name
         profile_handler.merge_profile(name)
     except KeyError as err:
         return {
@@ -58,6 +57,7 @@ def sync(name):
             'error': 'Server Error',
         }
 
+    print "%s: user requested merge" % name
     return {
         'status': 200,
         'data': "Profile %s updated" % name,
