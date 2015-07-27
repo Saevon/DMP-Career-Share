@@ -1,0 +1,9 @@
+Server:
+	* bought science.module
+	* bought longAntenna
+
+Player:
+	* bought longAntenna
+	* Mark1Cockpit
+
+warn: longAntenna double purchase

@@ -1,0 +1,62 @@
+name = ProgressTracking
+scene = 7, 8, 5
+Progress
+{
+	FirstLaunch
+	{
+		completed = 679.607568099958
+	}
+	FirstCrewToSurvive
+	{
+		completed = 922.521597641077
+		crew
+		{
+			crews = Jebediah Kerman
+		}
+	}
+	RecordsAltitude
+	{
+		reached = 705.521597640966
+		record = 5377.96499991929
+	}
+	RecordsSpeed
+	{
+		reached = 687.407568099951
+		record = 552.622122888051
+	}
+	RecordsDistance
+	{
+		reached = 789.441597641009
+		record = 791.626419519864
+	}
+	Kerbin
+	{
+		reached = 789.841597641009
+		Landing
+		{
+			completed = 789.841597641009
+			vessel
+			{
+				name = Untitled Space Craft
+				flag = Squad/Flags/default
+			}
+			crew
+			{
+				crews = Jebediah Kerman
+			}
+		}
+		Science
+		{
+			completed = 922.521597641077
+			vessel
+			{
+				name = Untitled Space Craft
+				flag = Squad/Flags/default
+			}
+			crew
+			{
+				crews = Jebediah Kerman
+			}
+		}
+	}
+}

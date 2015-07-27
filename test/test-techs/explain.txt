@@ -1,0 +1,10 @@
+Server:
+	* basicScience
+	* survivability
+	* stability
+
+Player:
+	* basicScience
+	* basicRocketry
+
+basicScience should be refunded

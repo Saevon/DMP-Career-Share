@@ -1,0 +1,19 @@
+Server:
+	* Did some recovery@KerbinFlew
+	* maxed mysteryGoo@KerbinFlyingLow
+
+	* did crewReport@KerbinFlyingLow
+	* did new mysteryGoo@KerbinFlyingHigh
+
+Client:
+	* Did some recovery@KerbinFlew
+	* maxed mysteryGoo@KerbinFlyingLow
+
+	* did evaReport@KerbinFlyingLow
+	* did new crewReport@KerbinFlyingHigh
+
+should merge crewReport@KerbinFlyingHigh
+should merge Recovery@KerbinFlew
+mysteryGoo@KerbinFlyingLow should not go over cap
+
+

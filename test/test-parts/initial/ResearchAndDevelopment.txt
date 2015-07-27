@@ -1,0 +1,74 @@
+name = ResearchAndDevelopment
+scene = 7, 8, 5, 6
+sci = 21.46007
+Tech
+{
+	id = start
+	state = Available
+	cost = 0
+	part = Engineer7500
+	part = EngineerChip
+	part = basicFin
+	part = mk1pod
+	part = solidBooster.sm
+	part = GooExperiment
+	part = trussPiece1x
+	part = parachuteSingle
+}
+Tech
+{
+	id = engineering101
+	state = Available
+	cost = 5
+	part = stackDecoupler
+}
+Science
+{
+	id = mysteryGoo@KerbinSrfLandedLaunchPad
+	title = Mystery Goo™ Observation from LaunchPad
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 3.9
+	cap = 3.9
+}
+Science
+{
+	id = crewReport@KerbinSrfLandedLaunchPad
+	title = Crew Report from LaunchPad
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 1.5
+	cap = 1.5
+}
+Science
+{
+	id = recovery@KerbinFlew
+	title = Recovery of a vessel that survived a flight.
+	dsc = 1
+	scv = 0.0001286666
+	sbv = 5
+	sci = 5.999228
+	cap = 6
+}
+Science
+{
+	id = mysteryGoo@KerbinFlyingLow
+	title = Mystery Goo™ Observation while flying at Kerbin
+	dsc = 1
+	scv = 0.4505493901
+	sbv = 0.7
+	sci = 5
+	cap = 9.099999
+}
+Science
+{
+	id = crewReport@KerbinFlyingLowShores
+	title = Crew Report while flying over Kerbin's Shores
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 3.5
+	cap = 3.5
+}

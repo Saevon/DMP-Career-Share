@@ -1,0 +1,118 @@
+name = ProgressTracking
+scene = 7, 8, 5
+Progress
+{
+	FirstLaunch
+	{
+		completed = 16.4199999999997
+	}
+	FirstCrewToSurvive
+	{
+		completed = 1000.15922546344
+		crew
+		{
+			crews = Jebediah Kerman
+		}
+	}
+	RecordsAltitude
+	{
+		completed = 746.257014159794
+		record = 70000
+	}
+	RecordsSpeed
+	{
+		completed = 23805.8285192503
+		record = 2500
+	}
+	RecordsDistance
+	{
+		completed = 17994.5873140706
+		record = 100000
+	}
+	ReachedSpace
+	{
+		completed = 746.257014159794
+		vessel
+		{
+			name = Untitled Space Craft
+			flag = Squad/Flags/default
+		}
+		crew
+		{
+			crews = Jebediah Kerman
+		}
+	}
+	Kerbin
+	{
+		reached = 56.0600000000032
+		Orbit
+		{
+			completed = 19202.4432125301
+			vessel
+			{
+				name = MoonSat-1
+				flag = Squad/Flags/default
+			}
+		}
+		Escape
+		{
+			completed = 90205.2521320273
+		}
+		Landing
+		{
+			completed = 56.0600000000032
+			vessel
+			{
+				name = Untitled Space Craft Debris
+				flag = Squad/Flags/default
+			}
+		}
+		Splashdown
+		{
+			completed = 2635.70074767882
+		}
+		Science
+		{
+			completed = 349.789140624985
+			vessel
+			{
+				name = Untitled Space Craft
+				flag = Squad/Flags/default
+			}
+		}
+		SurfaceEVA
+		{
+			completed = 2699.92398986626
+			crew
+			{
+				crews = Jebediah Kerman
+			}
+		}
+	}
+	Mun
+	{
+		reached = 90205.2521320273
+		Flyby
+		{
+			completed = 90205.2521320273
+		}
+		Orbit
+		{
+			completed = 93619.9665754212
+			vessel
+			{
+				name = MoonSat-1
+				flag = Squad/Flags/default
+			}
+		}
+		Science
+		{
+			completed = 93529.5516339983
+			vessel
+			{
+				name = MoonSat-1
+				flag = Squad/Flags/default
+			}
+		}
+	}
+}

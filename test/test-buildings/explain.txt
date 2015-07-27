@@ -1,0 +1,23 @@
+Server:
+	* Upgraded VAB
+	* Updated Runway
+
+	* Broke SPH
+	* Broke VAB
+	* Fixed OuterDish
+	* Fixed TrackingStation
+
+User:
+	* Updated Runway
+	* Updated SPH
+
+	* Broke SPH
+	* Broke LaunchPad
+	* Fixed OuterDish
+	* Fixed Admin
+
+* Flagpole was broken
+
+
+Double SPH Break is fine
+warn: Double OuterDish Fix

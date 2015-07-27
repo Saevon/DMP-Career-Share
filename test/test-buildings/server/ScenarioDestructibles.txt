@@ -1,0 +1,46 @@
+name = ScenarioDestructibles
+scene = 5, 7, 6, 8
+SpaceCenter/VehicleAssemblyBuilding/Facility/VAB2
+{
+	intact = False
+}
+SpaceCenter/TrackingStation/Facility/OuterDish
+{
+	intact = True
+}
+SpaceCenter/TrackingStation/Facility/building
+{
+	intact = True
+}
+SpaceCenter/SpaceplaneHangar/Facility/Building
+{
+	intact = False
+}
+SpaceCenter/ResearchAndDevelopment/Facility/ForeverAlone
+{
+	intact = True
+}
+SpaceCenter/ResearchAndDevelopment/Facility/mainBuilding
+{
+	intact = True
+}
+SpaceCenter/MissionControl/Facility/mainBuilding
+{
+	intact = True
+}
+SpaceCenter/LaunchPad/Facility/Flag
+{
+	intact = True
+}
+SpaceCenter/AstronautComplex/Facility/mainBuilding
+{
+	intact = True
+}
+SpaceCenter/FlagPole/Facility
+{
+	intact = False
+}
+SpaceCenter/Administration/Facility/Building
+{
+	intact = False
+}

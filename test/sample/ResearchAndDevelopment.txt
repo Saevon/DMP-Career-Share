@@ -1,0 +1,469 @@
+name = ResearchAndDevelopment
+scene = 7, 8, 5, 6
+sci = 55.58636
+Tech
+{
+	id = start
+	state = Available
+	cost = 0
+	part = Engineer7500
+	part = EngineerChip
+	part = basicFin
+	part = mk1pod
+	part = solidBooster.sm
+	part = GooExperiment
+	part = trussPiece1x
+	part = parachuteSingle
+}
+Tech
+{
+	id = engineering101
+	state = Available
+	cost = 5
+	part = stackDecoupler
+	part = science.module
+	part = Mark1Cockpit
+	part = longAntenna
+}
+Tech
+{
+	id = basicRocketry
+	state = Available
+	cost = 5
+	part = fuelTankSmallFlat
+	part = liquidEngine
+	part = solidBooster
+}
+Tech
+{
+	id = survivability
+	state = Available
+	cost = 15
+	part = parachuteRadial
+	part = HeatShield1
+	part = ServiceBay.125
+}
+Tech
+{
+	id = basicScience
+	state = Available
+	cost = 45
+	part = probeCoreSphere
+	part = batteryPack
+	part = sensorThermometer
+	part = mediumDishAntenna
+}
+Tech
+{
+	id = stability
+	state = Available
+	cost = 18
+	part = winglet
+	part = noseCone
+	part = radialDecoupler
+	part = standardNoseCone
+}
+Tech
+{
+	id = aviation
+	state = Available
+	cost = 45
+	part = airScoop
+	part = sweptWing
+	part = JetEngine
+	part = GearFree
+	part = GearFixed
+	part = tailfin
+	part = winglet3
+	part = StandardCtrlSrf
+	part = airplaneTail
+	part = wingConnector2
+}
+Tech
+{
+	id = generalRocketry
+	state = Available
+	cost = 20
+	part = fuelTankSmall
+	part = liquidEngine2
+	part = solidBooster1-1
+}
+Tech
+{
+	id = advRocketry
+	state = Available
+	cost = 45
+	part = liquidEngine3
+	part = radialLiquidEngine1-2
+	part = fuelTank
+}
+Tech
+{
+	id = electrics
+	state = Available
+	cost = 90
+	part = solarPanels5
+	part = batteryBankMini
+	part = spotLight1
+	part = probeCoreOcto
+}
+Tech
+{
+	id = flightControl
+	state = Available
+	cost = 45
+}
+Science
+{
+	id = mobileMaterialsLab@KerbinFlyingLow
+	title = Materials Study while flying at Kerbin
+	dsc = 1
+	scv = 0.01046726
+	sbv = 0.7
+	sci = 22.16553
+	cap = 22.4
+}
+Science
+{
+	id = temperatureScan@KerbinFlyingLowShores
+	title = Temperature Scan while flying over Kerbin's Shores
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 5.6
+	cap = 5.6
+}
+Science
+{
+	id = mysteryGoo@KerbinFlyingLow
+	title = Mystery Goo™ Observation while flying at Kerbin
+	dsc = 1
+	scv = 0.01228951
+	sbv = 0.7
+	sci = 8.988165
+	cap = 9.099999
+}
+Science
+{
+	id = mobileMaterialsLab@KerbinSrfLandedKSC
+	title = Materials Study from KSC
+	dsc = 1
+	scv = 0.21875
+	sbv = 0.3
+	sci = 7.5
+	cap = 9.6
+}
+Science
+{
+	id = mysteryGoo@KerbinSrfLandedKSC
+	title = Mystery Goo™ Observation from KSC
+	dsc = 1
+	scv = 0.2307692
+	sbv = 0.3
+	sci = 3
+	cap = 3.9
+}
+Science
+{
+	id = temperatureScan@KerbinSrfLandedKSC
+	title = Temperature Scan from KSC
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 2.4
+	cap = 2.4
+}
+Science
+{
+	id = recovery@KerbinFlew
+	title = Recovery of a vessel that survived a flight.
+	dsc = 1
+	scv = 0
+	sbv = 5
+	sci = 6
+	cap = 6
+}
+Science
+{
+	id = mysteryGoo@KerbinFlyingHigh
+	title = Mystery Goo™ Observation from Kerbin's upper atmosphere
+	dsc = 1
+	scv = 0.2307692
+	sbv = 0.9
+	sci = 9
+	cap = 11.7
+}
+Science
+{
+	id = temperatureScan@KerbinFlyingHigh
+	title = Temperature Scan from Kerbin's upper atmosphere
+	dsc = 1
+	scv = 0
+	sbv = 0.9
+	sci = 7.2
+	cap = 7.2
+}
+Science
+{
+	id = mysteryGoo@KerbinInSpaceLow
+	title = Mystery Goo™ Observation while in space near Kerbin
+	dsc = 1
+	scv = 0.05325449
+	sbv = 1
+	sci = 12.30769
+	cap = 13
+}
+Science
+{
+	id = temperatureScan@KerbinInSpaceLow
+	title = Temperature Scan while in space near Kerbin
+	dsc = 1
+	scv = 0
+	sbv = 1
+	sci = 8
+	cap = 8
+}
+Science
+{
+	id = crewReport@KerbinInSpaceLow
+	title = Crew Report while in space near Kerbin
+	dsc = 1
+	scv = 0
+	sbv = 1
+	sci = 5
+	cap = 5
+}
+Science
+{
+	id = recovery@KerbinSubOrbited
+	title = Recovery of a vessel after a sub-orbital flight.
+	dsc = 1
+	scv = 0.004629592
+	sbv = 8
+	sci = 9.555556
+	cap = 9.6
+}
+Science
+{
+	id = crewReport@KerbinSrfSplashedWater
+	title = Crew Report from Kerbin's Water
+	dsc = 1
+	scv = 0
+	sbv = 0.4
+	sci = 2
+	cap = 2
+}
+Science
+{
+	id = evaReport@KerbinSrfSplashedWater
+	title = EVA Report from Kerbin's Water
+	dsc = 1
+	scv = 0
+	sbv = 0.4
+	sci = 3.2
+	cap = 3.2
+}
+Science
+{
+	id = crewReport@KerbinSrfLandedShores
+	title = Crew Report from Kerbin's Shores
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 1.5
+	cap = 1.5
+}
+Science
+{
+	id = mysteryGoo@KerbinSrfLandedShores
+	title = Mystery Goo™ Observation from Kerbin's Shores
+	dsc = 1
+	scv = 0.2307692
+	sbv = 0.3
+	sci = 3
+	cap = 3.9
+}
+Science
+{
+	id = temperatureScan@KerbinSrfLandedShores
+	title = Temperature Scan from Kerbin's Shores
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 2.4
+	cap = 2.4
+}
+Science
+{
+	id = mobileMaterialsLab@KerbinSrfLandedShores
+	title = Materials Study from Kerbin's Shores
+	dsc = 1
+	scv = 0.21875
+	sbv = 0.3
+	sci = 7.5
+	cap = 9.6
+}
+Science
+{
+	id = evaReport@KerbinFlyingLowShores
+	title = EVA Report while flying over Kerbin's Shores
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 5.6
+	cap = 5.6
+}
+Science
+{
+	id = crewReport@KerbinFlyingHigh
+	title = Crew Report from Kerbin's upper atmosphere
+	dsc = 1
+	scv = 0
+	sbv = 0.9
+	sci = 4.5
+	cap = 4.5
+}
+Science
+{
+	id = temperatureScan@KerbinFlyingLowGrasslands
+	title = Temperature Scan while flying over Kerbin's Grasslands
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 5.6
+	cap = 5.6
+}
+Science
+{
+	id = temperatureScan@KerbinFlyingLowHighlands
+	title = Temperature Scan while flying over Kerbin's Highlands
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 5.6
+	cap = 5.6
+}
+Science
+{
+	id = crewReport@KerbinFlyingLowShores
+	title = Crew Report while flying over Kerbin's Shores
+	dsc = 1
+	scv = 1
+	sbv = 0.7
+	sci = 0
+	cap = 3.5
+}
+Science
+{
+	id = crewReport@KerbinFlyingLowHighlands
+	title = Crew Report while flying over Kerbin's Highlands
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 3.5
+	cap = 3.5
+}
+Science
+{
+	id = evaReport@KerbinFlyingLowHighlands
+	title = EVA Report while flying over Kerbin's Highlands
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 5.6
+	cap = 5.6
+}
+Science
+{
+	id = evaReport@KerbinSrfLandedHighlands
+	title = EVA Report from Kerbin's Highlands
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 2.4
+	cap = 2.4
+}
+Science
+{
+	id = temperatureScan@KerbinSrfLandedHighlands
+	title = Temperature Scan from Kerbin's Highlands
+	dsc = 1
+	scv = 0
+	sbv = 0.3
+	sci = 2.4
+	cap = 2.4
+}
+Science
+{
+	id = temperatureScan@KerbinInSpaceHigh
+	title = Temperature Scan while in space high over Kerbin
+	dsc = 1
+	scv = 0.5
+	sbv = 1.5
+	sci = 6
+	cap = 12
+}
+Science
+{
+	id = mobileMaterialsLab@MunInSpaceHigh
+	title = Materials Study while in space high over the Mun
+	dsc = 1
+	scv = 0.7265625
+	sbv = 2
+	sci = 17.5
+	cap = 64
+}
+Science
+{
+	id = mysteryGoo@MunInSpaceHigh
+	title = Mystery Goo™ Observation while in space high over the Mun
+	dsc = 1
+	scv = 0.7692308
+	sbv = 2
+	sci = 6
+	cap = 26
+}
+Science
+{
+	id = temperatureScan@MunInSpaceHigh
+	title = Temperature Scan while in space high over the Mun
+	dsc = 1
+	scv = 0.5
+	sbv = 2
+	sci = 8
+	cap = 16
+}
+Science
+{
+	id = mysteryGoo@MunInSpaceLow
+	title = Mystery Goo™ Observation while in space near the Mun
+	dsc = 1
+	scv = 0.7692308
+	sbv = 3
+	sci = 9
+	cap = 39
+}
+Science
+{
+	id = mobileMaterialsLab@MunInSpaceLow
+	title = Materials Study while in space near the Mun
+	dsc = 1
+	scv = 0.7265625
+	sbv = 3
+	sci = 26.25
+	cap = 96
+}
+Science
+{
+	id = temperatureScan@MunInSpaceLow
+	title = Temperature Scan while in space near the Mun
+	dsc = 1
+	scv = 0.5
+	sbv = 3
+	sci = 12
+	cap = 24
+}
+ExpParts
+{
+	engineLargeSkipper = 1
+}

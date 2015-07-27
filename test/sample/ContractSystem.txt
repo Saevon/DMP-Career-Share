@@ -1,0 +1,650 @@
+name = ContractSystem
+scene = 7, 8, 5, 6
+update = 140691.881309526
+CONTRACTS
+{
+	CONTRACT
+	{
+		guid = c8e9a232-f140-475f-b483-4dc6c53093d6
+		type = TourismContract
+		prestige = 0
+		seed = -724148676
+		state = Offered
+		agent = Rokea Inc
+		deadlineType = Floating
+		expiryType = Floating
+		values = 39187.2260445952,41734395.7374939,0,0,0,0,17.64217,15,151145.007722675,0,0,0
+		gender = 1
+		kerbalName = Tangard Kerman
+		PARAM
+		{
+			name = KerbalTourParameter
+			state = Incomplete
+			values = 8775,0,0,0,0
+			kerbalName = Tangard Kerman
+			PARAM
+			{
+				name = KerbalDestinationParameter
+				state = Incomplete
+				values = 2925,0,0,0,0
+				targetBody = 1
+				targetType = Suborbit
+				kerbalName = Tangard Kerman
+			}
+		}
+	}
+	CONTRACT
+	{
+		guid = c3771f37-103a-4927-b7b1-e7f05f306296
+		type = TourismContract
+		prestige = 0
+		seed = -664702919
+		state = Offered
+		agent = WinterOwl Aircraft Emporium
+		deadlineType = Floating
+		expiryType = Floating
+		values = 84292.6849365234,44885854.7286987,0,0,0,0,18.16852,14.56311,212374.544785968,0,0,0
+		gender = 1
+		kerbalName = Adzer Kerman
+		PARAM
+		{
+			name = KerbalTourParameter
+			state = Incomplete
+			values = 17550,0,0,0,0
+			kerbalName = Adzer Kerman
+			PARAM
+			{
+				name = KerbalDestinationParameter
+				state = Incomplete
+				values = 2925,0,0,0,0
+				targetBody = 1
+				targetType = Suborbit
+				kerbalName = Adzer Kerman
+			}
+			PARAM
+			{
+				name = KerbalDestinationParameter
+				state = Incomplete
+				values = 2925,0,0,0,0
+				targetBody = 1
+				targetType = Orbit
+				kerbalName = Adzer Kerman
+			}
+		}
+	}
+	CONTRACT
+	{
+		guid = 819e6555-e910-4db3-b441-5c4c030d5ff6
+		type = TourismContract
+		prestige = 0
+		seed = 1679409834
+		state = Offered
+		agent = Kerbin World-Firsts Record-Keeping Society
+		deadlineType = Floating
+		expiryType = Floating
+		values = 108000,46008000,0,0,0,0,19.62,15,248163.881309802,0,0,0
+		gender = 0
+		kerbalName = Madbe Kerman
+		kerbalName = Erwise Kerman
+		PARAM
+		{
+			name = KerbalTourParameter
+			state = Incomplete
+			values = 8775,0,0,0,0
+			kerbalName = Madbe Kerman
+			PARAM
+			{
+				name = KerbalDestinationParameter
+				state = Incomplete
+				values = 2925,0,0,0,0
+				targetBody = 1
+				targetType = Suborbit
+				kerbalName = Madbe Kerman
+			}
+		}
+		PARAM
+		{
+			name = KerbalTourParameter
+			state = Incomplete
+			values = 8775,0,0,0,0
+			kerbalName = Erwise Kerman
+			PARAM
+			{
+				name = KerbalDestinationParameter
+				state = Incomplete
+				values = 2925,0,0,0,0
+				targetBody = 1
+				targetType = Suborbit
+				kerbalName = Erwise Kerman
+			}
+		}
+	}
+	CONTRACT
+	{
+		guid = 44e7e568-209b-46a9-9112-174cf3f8cd48
+		type = SurveyContract
+		prestige = 0
+		seed = 1679409837
+		state = Offered
+		agent = Probodobodyne Inc
+		deadlineType = Floating
+		expiryType = Floating
+		values = 86400,92016000,54000,95400,54000,0,8.64,15.12,226563.881309802,0,0,0
+		targetBody = 2
+		centerLatitude = -1.54365772767084
+		centerLongitude = -81.8123254281526
+		surveyTitle = Perform temperature scans of the Mun.
+		randomTopic = 2HOT Thermometer
+		surveyBriefing = We want to see how the temperature fluctuates in one particular region of the Mun. Take a few measurements there.
+		surveyDebriefing = It looks like the Mun is a touch warmer than we expected, but this is what we needed.
+		focusedSurvey = False
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Measure the temperature
+			experiment = temperatureScan
+			flightThreshold = 9600
+			band = 3
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = -1896652978
+			wpIndex = 0
+			wpTexture = thermometer
+			wpLatitude = -24.4045977809609
+			wpLongitude = -80.9713456499542
+			wpLandlocked = False
+		}
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Measure the temperature
+			experiment = temperatureScan
+			flightThreshold = 9200
+			band = 2
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = -1896652978
+			wpIndex = 1
+			wpTexture = thermometer
+			wpLatitude = 9.40426766488744
+			wpLongitude = -68.1455096634735
+			wpLandlocked = False
+		}
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Measure the temperature
+			experiment = temperatureScan
+			flightThreshold = 10300
+			band = 3
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = -1896652978
+			wpIndex = 2
+			wpTexture = thermometer
+			wpLatitude = -17.7630949296082
+			wpLongitude = -82.5103264657597
+			wpLandlocked = False
+		}
+	}
+	CONTRACT
+	{
+		guid = 53294724-fcb4-4106-abb2-8b0591974712
+		type = SurveyContract
+		prestige = 0
+		seed = -724148681
+		state = Offered
+		agent = Rokea Inc
+		deadlineType = Floating
+		expiryType = Floating
+		values = 78374.4520891905,83468791.4749878,57844.7962715149,107302.092210743,58400.9957256318,0,7.840963,14,190332.23376727,0,0,0
+		targetBody = 2
+		centerLatitude = -37.4269338636397
+		centerLongitude = 119.920801436492
+		surveyTitle = Perform temperature scans of the Mun.
+		randomTopic = 2HOT Thermometer
+		surveyBriefing = We want to see how the temperature fluctuates in one particular region of the Mun. Take a few measurements there.
+		surveyDebriefing = It looks like the Mun is a touch warmer than we expected, but this is what we needed.
+		focusedSurvey = False
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Measure the temperature
+			experiment = temperatureScan
+			flightThreshold = 11200
+			band = 2
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = -860734584
+			wpIndex = 0
+			wpTexture = thermometer
+			wpLatitude = -29.8326980695823
+			wpLongitude = 113.456742037881
+			wpLandlocked = False
+		}
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Measure the temperature
+			experiment = temperatureScan
+			flightThreshold = 10200
+			band = 2
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = -860734584
+			wpIndex = 1
+			wpTexture = thermometer
+			wpLatitude = -46.8873958272542
+			wpLongitude = 134.820633290715
+			wpLandlocked = False
+		}
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Measure the temperature
+			experiment = temperatureScan
+			flightThreshold = 10400
+			band = 2
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = -860734584
+			wpIndex = 2
+			wpTexture = thermometer
+			wpLatitude = -48.0823550789743
+			wpLongitude = 121.867371321581
+			wpLandlocked = False
+		}
+	}
+	CONTRACT
+	{
+		guid = f121fba1-7641-4238-b989-0a697b7b89cf
+		type = SurveyContract
+		prestige = 0
+		seed = 1155362256
+		state = Offered
+		agent = O.M.B. Demolition Enterprises
+		deadlineType = Floating
+		expiryType = Floating
+		values = 86400,92016000,54000,100169.995450974,56699.9974250793,0,7.619048,14,227074.321309535,0,0,0
+		targetBody = 2
+		centerLatitude = -55.6139713933515
+		centerLongitude = 136.556450834757
+		surveyTitle = Perform visual surveys of the Mun.
+		randomTopic = the Mun
+		surveyBriefing = There are places on the Mun that we don't know much about, head there and see what you can see.
+		surveyDebriefing = These results are fantastic! We know so much more about the Mun! We are forwarding funds now.
+		focusedSurvey = False
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Take a crew report
+			experiment = crewReport
+			flightThreshold = 11000
+			band = 3
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = 2118053547
+			wpIndex = 0
+			wpTexture = report
+			wpLatitude = -76.6226497051822
+			wpLongitude = 172.385560104379
+			wpLandlocked = False
+		}
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Take a crew report
+			experiment = crewReport
+			flightThreshold = 10900
+			band = 2
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = 2118053547
+			wpIndex = 1
+			wpTexture = report
+			wpLatitude = -61.3391277197444
+			wpLongitude = 144.419929861642
+			wpLandlocked = False
+		}
+		PARAM
+		{
+			name = SurveyWaypointParameter
+			state = Incomplete
+			values = 15840,0,3,3,0
+			actionDescription = Take a crew report
+			experiment = crewReport
+			flightThreshold = 11400
+			band = 2
+			clusterState = MIXED
+			targetBody = 2
+			verified = True
+			wpSeed = 2118053547
+			wpIndex = 2
+			wpTexture = report
+			wpLatitude = -69.3480953436112
+			wpLongitude = 136.840038454659
+			wpLandlocked = False
+		}
+	}
+	CONTRACT
+	{
+		guid = 023ef934-513b-4f59-b912-48c432fc11c2
+		type = SatelliteContract
+		prestige = 0
+		seed = 1679409838
+		state = Offered
+		agent = Research & Development Department
+		deadlineType = Floating
+		expiryType = Floating
+		values = 43200,92016000,28800,73800,28800,0,9,8,183363.881309802,0,0,0
+		targetBody = 2
+		deviation = 7
+		orbitType = 6
+		PARAM
+		{
+			name = ProbeSystemsParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			hasAntenna = False
+			hasPowerGenerator = False
+			launchID = 0
+		}
+		PARAM
+		{
+			name = SpecificOrbitParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			targetBody = 2
+			deviationWindow = 7
+			orbitType = 6
+			inclination = 167.201412824749
+			eccentricity = 0.0537103116671492
+			sma = 314531.204848681
+			lan = 81.8392577403408
+			argumentOfPeriapsis = 149.739939768885
+			meanAnomalyAtEpoch = 4.85052141076307
+			epoch = 0
+		}
+		PARAM
+		{
+			name = StabilityParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			holdSeconds = 10
+		}
+	}
+	CONTRACT
+	{
+		guid = 8acf777d-a91b-46c6-b504-336c2163734e
+		type = SatelliteContract
+		prestige = 1
+		seed = 1679409839
+		state = Offered
+		agent = Zaltonic Electronics
+		deadlineType = Floating
+		expiryType = Floating
+		values = 108000,46008000,42411.5992069244,119547.978355646,46652.7601387882,6,12.96386,11.81818,248163.881309802,0,0,0
+		targetBody = 1
+		deviation = 5
+		orbitType = 0
+		PARAM
+		{
+			name = ProbeSystemsParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			hasAntenna = False
+			hasPowerGenerator = False
+			launchID = 0
+		}
+		PARAM
+		{
+			name = SpecificOrbitParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			targetBody = 1
+			deviationWindow = 5
+			orbitType = 0
+			inclination = 0.9999999999999
+			eccentricity = 0.198287132085529
+			sma = 3468742.35100531
+			lan = 24.5745731818371
+			argumentOfPeriapsis = 323.379529375546
+			meanAnomalyAtEpoch = 6.22903072083797
+			epoch = 0
+		}
+		PARAM
+		{
+			name = PartRequestParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			title = Have a thermometer on the satellite
+			partNames = sensorThermometer
+			moduleNames = 
+		}
+		PARAM
+		{
+			name = StabilityParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			holdSeconds = 10
+		}
+	}
+	CONTRACT
+	{
+		guid = 25408e6e-a2c8-4b97-8157-de7f8c6cc4e5
+		type = SatelliteContract
+		prestige = 1
+		seed = 1679409842
+		state = Offered
+		agent = Reaction Systems Ltd
+		deadlineType = Floating
+		expiryType = Floating
+		values = 108000,46008000,36000,101475.002199411,39600.0008583069,0,12.72727,11,248163.881309802,0,0,0
+		targetBody = 1
+		deviation = 5
+		orbitType = 6
+		PARAM
+		{
+			name = ProbeSystemsParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			hasAntenna = False
+			hasPowerGenerator = False
+			launchID = 0
+		}
+		PARAM
+		{
+			name = SpecificOrbitParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			targetBody = 1
+			deviationWindow = 5
+			orbitType = 6
+			inclination = 6.43165578518283
+			eccentricity = 0.163939075873392
+			sma = 14266107.9448725
+			lan = 302.567349142659
+			argumentOfPeriapsis = 237.274414253834
+			meanAnomalyAtEpoch = 5.93780435834846
+			epoch = 0
+		}
+		PARAM
+		{
+			name = StabilityParameter
+			state = Incomplete
+			values = 0,0,0,0,0
+			holdSeconds = 10
+		}
+	}
+	CONTRACT
+	{
+		guid = 44d70f20-0ed2-433d-946e-88069df921c1
+		type = PartTest
+		prestige = 1
+		seed = -664702918
+		state = Offered
+		agent = Research & Development Department
+		deadlineType = Floating
+		expiryType = Floating
+		values = 21600,9201600,16200,40500,27000,6,11,13,149681.859849445,0,0,0
+		part = SmallGearBay
+		dest = 1
+		sit = SUB_ORBITAL
+		exp = True
+		PARAM
+		{
+			name = PartTest
+			id = runTest
+			state = Incomplete
+			values = 0,0,0,0,0
+			part = SmallGearBay
+			notes = To perform the test, use the [Run Test] option in the part's context menu when all test conditions are met.
+			PARAM
+			{
+				name = ReachDestination
+				id = testDestination
+				state = Incomplete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				dest = 1
+				title = 
+			}
+			PARAM
+			{
+				name = ReachSituation
+				id = testSituation
+				state = Incomplete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				sit = SUB_ORBITAL
+				title = 
+			}
+			PARAM
+			{
+				name = ReachAltitudeEnvelope
+				id = testAltitudeEnvelope
+				state = Incomplete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				minAlt = 70000
+				maxAlt = 87000
+			}
+		}
+	}
+	CONTRACT
+	{
+		guid = 216af90f-b363-440d-a250-a4bca36bcd7e
+		type = PartTest
+		prestige = 1
+		seed = 1679409847
+		state = Offered
+		agent = Rockomax Conglomerate
+		deadlineType = Floating
+		expiryType = Floating
+		values = 34754.6251178843,7402735.15010935,24048.7515262574,66134.661926972,43287.7534697056,9,15.69983,19,174918.506427686,0,0,0
+		part = engineLargeSkipper
+		dest = 1
+		sit = ESCAPING
+		exp = True
+		PARAM
+		{
+			name = PartTest
+			id = runTest
+			state = Incomplete
+			values = 0,0,0,0,0
+			part = engineLargeSkipper
+			notes = To perform the test, activate the part through the staging sequence when all test conditions are met.
+			PARAM
+			{
+				name = ReachDestination
+				id = testDestination
+				state = Incomplete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				dest = 1
+				title = 
+			}
+			PARAM
+			{
+				name = ReachSituation
+				id = testSituation
+				state = Incomplete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				sit = ESCAPING
+				title = 
+			}
+		}
+	}
+	CONTRACT_FINISHED
+	{
+		guid = 40510e24-08dd-4f79-bca5-1dbe01007795
+		type = PartTest
+		prestige = 0
+		seed = 1679409835
+		state = Completed
+		agent = Jebediah Kerman's Junkyard and Spacecraft Parts Co
+		deadlineType = Floating
+		expiryType = Floating
+		values = 20377.3568630219,8680754.02364731,1499.99997496605,3937.49975547195,2834.99987125397,1,1.068908,1.960784,160541.238172824,140671.421309536,8821425.44495685,140674.321309535
+		part = liquidEngine2
+		dest = 1
+		sit = LANDED
+		exp = False
+		PARAM
+		{
+			name = PartTest
+			id = runTest
+			enabled = False
+			state = Complete
+			values = 0,0,0,0,0
+			part = liquidEngine2
+			notes = To perform the test, activate the part through the staging sequence when all test conditions are met.
+			tested = 2977045075
+			PARAM
+			{
+				name = ReachDestination
+				id = testDestination
+				state = Complete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				dest = 1
+				title = 
+			}
+			PARAM
+			{
+				name = ReachSituation
+				id = testSituation
+				state = Complete
+				disableOnStateChange = False
+				values = 0,0,0,0,0
+				sit = LANDED
+				title = 
+			}
+		}
+	}
+}

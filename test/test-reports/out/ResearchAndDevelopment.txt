@@ -1,0 +1,64 @@
+name = ResearchAndDevelopment
+scene = 7, 8, 5, 6
+sci = 30.5
+Science
+{
+	id = recovery@KerbinFlew
+	title = Recovery of a vessel that survived a flight.
+	dsc = 1
+	scv = 0.1666666666
+	sbv = 5
+	sci = 5
+	cap = 6
+}
+Science
+{
+	id = mysteryGoo@KerbinFlyingLow
+	title = Mystery Goo™ Observation while flying at Kerbin
+	dsc = 1
+	scv = 0
+	sbv = 0.7
+	sci = 10
+	cap = 10
+}
+Science
+{
+	id = crewReport@KerbinFlyingLow
+	title = Crew Report while flying at Kerbin
+	dsc = 1
+	scv = 0.25
+	sbv = 0.7
+	sci = 3
+	cap = 4
+}
+Science
+{
+	id = evaReport@KerbinFlyingLow
+	title = EVA Report while flying at Kerbin
+	dsc = 1
+	scv = 0.25
+	sbv = 0.7
+	sci = 3
+	cap = 4
+}
+Science
+{
+	id = mysteryGoo@KerbinFlyingHigh
+	title = Crew Report while flying high above Kerbin's atmosphere
+	dsc = 1
+	scv = 0.5
+	sbv = 0.7
+	sci = 5
+	cap = 10
+}
+Science
+{
+	id = crewReport@KerbinFlyingHigh
+	title = Crew Report while flying high above Kerbin's atmosphere
+	dsc = 1
+	scv = 0.5
+	sbv = 0.7
+	sci = 5
+	cap = 10
+}
+

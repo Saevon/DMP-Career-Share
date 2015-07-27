@@ -1,0 +1,9 @@
+Server:
+	* Decreased Funding
+	* Increased Science
+	* Increased Rep
+Player:
+	* Increased Funding
+	* Increased Rep
+
+Therefore the three simple values should merge

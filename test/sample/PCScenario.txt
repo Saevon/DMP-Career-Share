@@ -1,0 +1,41 @@
+name = PCScenario
+scene = 7
+PartCommanderGameSettings
+{
+	windowDefaultX = 1170
+	windowDefaultY = 250
+	windowDefaultWidth = 250
+	windowDefaultHeight = 400
+	visibleWindow = False
+	Vessels
+	{
+		b006ded0-02a1-46f7-b818-67f42377b375
+		{
+			windowX = 1170
+			windowY = 250
+			windowWidth = 250
+			windowHeight = 400
+			currentPartId = 753273310
+			symLock = True
+			showTemp = False
+			showAero = False
+			PartWindows
+			{
+			}
+		}
+		e86b7067-8423-47cc-b919-886ae9e7353e
+		{
+			windowX = 1170
+			windowY = 250
+			windowWidth = 250
+			windowHeight = 400
+			currentPartId = 4100753835
+			symLock = True
+			showTemp = False
+			showAero = False
+			PartWindows
+			{
+			}
+		}
+	}
+}

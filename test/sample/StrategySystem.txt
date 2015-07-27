@@ -1,0 +1,15 @@
+name = StrategySystem
+scene = 7, 8, 5, 6
+STRATEGIES
+{
+	STRATEGY
+	{
+		name = UnpaidResearchProgramCfg
+		date = 24600.478671203
+		factor = 0.05
+		EFFECT
+		{
+			name = CurrencyConverter
+		}
+	}
+}

@@ -218,7 +218,10 @@ class DualProfile(Profile):
 
     def _merge(self):
         with get_threading_lock(self.server_profile, 'data_files'):
-            merger.merge(self.initial, self.data, self.server_profile.data)
+            errors = merger.merge(self.initial, self.data, self.server_profile.data)
+
+            for error in errors:
+                print error
 
             # Finish the parse
             for name in self.ALL_DATA:

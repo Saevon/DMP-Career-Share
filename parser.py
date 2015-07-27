@@ -147,16 +147,14 @@ class PostProcessor(object):
         if "GAME" in data.keys():
             scenarios = data["GAME"][0]["SCENARIO"]
             for scenario in scenarios:
-                self.process_scenario(scenario)
+                if "name" in data.keys():
+                    self.process_scenario(scenario)
         elif "name" in data.keys():
             self.process_scenario(data)
 
         return data
 
     def process_scenario(self, scenario):
-        if "name" not in scenario.keys():
-            return
-
         processor = self.PROCESSORS.get(scenario["name"], False)
         if processor:
             processor(self, scenario)
@@ -165,8 +163,8 @@ class PostProcessor(object):
     def process_rnd(self, scenario):
         # We know for sure that each tech has a list of parts
         # but the list is a duplication list (therefore sometimes parses as a single item)
-        for tech in scenario["Tech"]:
-            if not isinstance(tech["part"], list):
+        for tech in scenario.get("Tech", {}):
+            if "part" in tech.keys() and not isinstance(tech["part"], list):
                 tech["part"] = DuplicationList([tech["part"]])
 
 

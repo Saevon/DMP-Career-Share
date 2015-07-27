@@ -3,8 +3,8 @@
 import re
 
 
-INT_RE = re.compile('^[0-9]+$')
-FLOAT_RE = re.compile('^[0-9]+(\.[0-9]+)?$')
+INT_RE = re.compile('^-?[0-9]+$')
+FLOAT_RE = re.compile('^-?[0-9]+(\.[0-9]+)?$')
 
 def is_float(val):
     return FLOAT_RE.match(val) is not None

@@ -1,0 +1,7 @@
+name = ResourceScenario
+scene = 5, 7, 6
+RESOURCE_SETTINGS
+{
+	GameSeed = 1556313530
+	MaxDeltaTime = 21600
+}

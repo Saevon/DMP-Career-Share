@@ -6,6 +6,8 @@ from profile import Profile
 from error import DMPException
 import merger
 
+import termcolor
+
 
 TEST_PATH = './test/'
 DEBUG = False
@@ -22,6 +24,11 @@ def debug(*vals):
 
 
 def compare(input, output, index):
+    if input is None or output is None:
+        # lists with no values don't get output, so act as None
+        if len(input) == 0 or len(output) == 0:
+            return
+
     if type(input) != type(output):
         raise TestError("Type mismatch: %s (%s != %s)" % (
             index,
@@ -37,14 +44,21 @@ def compare(input, output, index):
         if input != output:
             raise TestError("Mismatch: %s (%s != %s)" % (index, input, output))
 
+def compare_id(input, output, index):
+    input_id = input.get('id', None)
+    output_id = output.get('id', None)
+
+    if input_id != output_id:
+        raise TestError("Mismatch (id): %s (%s != %s)" % (index, input_id, output_id))
+
 def compare_list(input, output, index):
     length = max(len(input), len(output))
 
     for i in range(length):
+        subindex = "%s.%i" % (index, i)
         if isinstance(output[i], dict) and output[i].get('id', False):
-            subindex = "%s.%i(%s)" % (index, i, output[i]['id'])
-        else:
-            subindex = "%s.%i" % (index, i)
+            compare_id(input[i], output[i], subindex)
+            subindex = "%s(%s)" % (subindex, output[i]['id'])
 
 
         debug("List: %s" % subindex)
@@ -61,12 +75,13 @@ def compare_dict(input, output, index):
     for key in keys:
         subindex = "%s['%s']" % (index, key)
         debug("Dict: %s" % subindex)
-        compare(input[key], output[key], subindex)
+
+        compare(input.get(key, None), output.get(key, None), subindex)
 
 def compare_data_profile(input, output):
     for key, val in input.data.iteritems():
         debug("File: %s" % key)
-        compare_dict(input.data[key].data, output.data[key].data, key.strip(".txt"))
+        compare_dict(input.data[key].data, output.data[key].data, key[:-len(".txt")])
 
 def test(name):
     path = os.path.join(TEST_PATH, name)
@@ -76,11 +91,11 @@ def test(name):
     server = Profile('server', path).refresh()
     out = Profile('out', path).refresh()
 
-    merger.merge(initial.data, current.data, server.data)
+    errors = merger.merge(initial.data, current.data, server.data)
+    if errors:
+        print termcolor.colored(errors, 'yellow')
 
-    err = compare_data_profile(out, initial)
-    if err:
-        print err
+    compare_data_profile(initial, out)
 
 if __name__ == '__main__':
     for folder in os.listdir(TEST_PATH):
@@ -97,4 +112,6 @@ if __name__ == '__main__':
         try:
             test(folder)
         except DMPException as err:
-            print err.trace
+            print termcolor.colored(err.trace, 'red')
+        except TestError as err:
+            print termcolor.colored(err, 'red')
