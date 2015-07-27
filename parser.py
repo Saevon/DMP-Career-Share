@@ -121,17 +121,53 @@ class DictState(DataState):
             )
 
 
-def post_process(data):
+class PostProcessor(object):
     '''
-    Does special post-processing based on a file schema
+    Module for post processing
     '''
-    if data["name"] == "ResearchAndDevelopment":
+
+    PROCESSORS = {}
+
+    def register_processor(mapping, name):
+        def wrapper(func):
+            mapping[name] = func
+
+            return func
+        return wrapper
+
+    @classmethod
+    def run(Class, data):
+        return Class().process(data)
+
+    def process(self, data):
+        '''
+        Does special post-processing based on a file schema
+        '''
+        # This
+        if "GAME" in data.keys():
+            scenarios = data["GAME"][0]["SCENARIO"]
+            for scenario in scenarios:
+                self.process_scenario(scenario)
+
+        return data
+
+    def process_scenario(self, scenario):
+        if "name" not in scenario.keys():
+            return
+
+        processor = self.PROCESSORS.get("name", False)
+        if processor:
+            processor(scenario)
+
+
+    @register_processor(PROCESSORS, "ResearchAndDevelopment")
+    @staticmethod
+    def process_rnd(data, scenario):
         # We know for sure that each tech has a list of parts
         # but the list is a duplication list (therefore sometimes parses as a single item)
-        for tech in data["Tech"]:
+        for tech in scenario["Tech"]:
             if not isinstance(tech["part"], list):
                 tech["part"] = DuplicationList([tech["part"]])
-    return data
 
 
 def load(fp, options=None):
@@ -147,7 +183,7 @@ def load(fp, options=None):
     except State.Error as err:
         raise DMPException.wraps(err)
 
-    return post_process(machine.get_data())
+    return PostProcessor.run(machine.get_data())
 
 def dump(data, options=None):
     config = {
