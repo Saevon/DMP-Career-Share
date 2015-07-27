@@ -60,11 +60,17 @@ def _merge(initial, current, server):
         server["ResearchAndDevelopment.txt"].data["sci"],
     )
 
-    fund_refund, new_techs = merge_techs(
+    sci_refund, new_techs = merge_techs(
         initial["ResearchAndDevelopment.txt"].data["Tech"],
         current["ResearchAndDevelopment.txt"].data["Tech"],
         server["ResearchAndDevelopment.txt"].data["Tech"],
     )
+    # TODO: If two people buy tech, you paid for it twice
+    #     If we can figure out how much to refund...
+    fund_refund = 0
+
+    # Tech sci is an expenditure, thus difficulty doesn't apply
+    new_sci += sci_refund
 
     sci_refund, new_reports = merge_reports(
         initial["ResearchAndDevelopment.txt"].data["Science"],
@@ -72,7 +78,7 @@ def _merge(initial, current, server):
         server["ResearchAndDevelopment.txt"].data["Science"],
     )
 
-    # Update the science refunds based on difficulty
+    # RnD sci is a reward, thus difficulty applies
     new_sci += (sci_refund * DIFFICULTY)
 
     initial["ResearchAndDevelopment.txt"].data["Tech"] = new_techs
@@ -95,6 +101,8 @@ def _merge(initial, current, server):
 
     #########################################
     # Buildings
+
+    # TODO: Upgrading a building that was upgraded is a refund, should be added
     new_lvls = merge_building_upgrades(
         initial["ScenarioUpgradeableFacilities.txt"].data,
         current["ScenarioUpgradeableFacilities.txt"].data,
@@ -105,6 +113,7 @@ def _merge(initial, current, server):
         current["ScenarioUpgradeableFacilities.txt"].data[building]["lvl"] = lvl
         server["ScenarioUpgradeableFacilities.txt"].data[building]["lvl"] = lvl
 
+    # TODO: Fixing a building that was fixed is a refund, should be added
     new_status = merge_building_status(
         initial["ScenarioDestructibles.txt"].data,
         current["ScenarioDestructibles.txt"].data,
@@ -336,7 +345,7 @@ def merge_tech(initial, current, server):
     Merges an individual researched tech.
     Returns the refund that should be applied, and a new tech object to replace the old one
     '''
-    refund = 0
+    sci_refund = 0
 
     if server is None:
         # The server did nothing, keep the player's
@@ -347,7 +356,8 @@ def merge_tech(initial, current, server):
         return server
 
     if initial is None:
-        refund = current["cost"]
+        # Both server and player researched this
+        sci_refund = current["cost"]
 
     new_tech = OrderedDict()
     new_tech.update(current)
@@ -359,7 +369,7 @@ def merge_tech(initial, current, server):
 
     # See what the player changed
     for part in current["part"]:
-        if part in initial["part"]:
+        if initial is not None and part in initial["part"]:
             continue
         if part in new_tech["part"]:
             print "WARNING: Both server and player bought part: %s" % part
@@ -369,6 +379,6 @@ def merge_tech(initial, current, server):
     if new_tech["state"] != "Available":
         print "WARNING: tech state is not Available? WTF does that mean?"
 
-    return refund, new_tech
+    return sci_refund, new_tech
 
 
