@@ -6,6 +6,7 @@ import os.path
 from timer import TimerThread
 
 from lib.lock import with_threading_lock, get_threading_lock
+from lib.cascade import cascade
 
 import parser
 import merger
@@ -30,12 +31,14 @@ class DataFile(object):
     def is_ready(self):
         return self.status == self.STATUS_UPDATED
 
+    @cascade
     def on_data(self):
         self.status = self.STATUS_UPDATED
 
         with open(self.path, 'r') as fp:
             self.data = parser.load(fp)
 
+    @cascade
     def save(self, path):
         '''
         Dumps the data to the given path using kerbal format
@@ -86,12 +89,14 @@ class Profile(object):
             self.timer = TimerThread(self.on_timer_end)
             self.timer.start()
 
+    @cascade
     def stop(self):
         try:
             self.timer.stop()
         except:
             pass
 
+    @cascade
     @with_threading_lock('data_files')
     def update_file(self, path):
         if path not in self.data:
@@ -113,6 +118,7 @@ class Profile(object):
 
         self.merge()
 
+    @cascade
     @with_threading_lock('data_files')
     def merge(self):
         '''
@@ -126,6 +132,7 @@ class Profile(object):
     def _merge(self):
         pass
 
+    @cascade
     @with_threading_lock('data_files')
     def refresh(self):
         '''
@@ -139,6 +146,7 @@ class Profile(object):
 
 class DualProfile(Profile):
 
+    @cascade
     def set_server(self, server_profile):
         self.server_profile = server_profile
 
@@ -197,6 +205,7 @@ class ProfileHandler(object):
             self.stop()
             raise
 
+    @cascade
     def load_profiles(self):
         '''
         Loads the profiles and their files that currently exist in the system
@@ -236,6 +245,7 @@ class ProfileHandler(object):
 
         return profile
 
+    @cascade
     def refresh_profile(self, name):
         '''
         Reloads all the files for the given profile
@@ -249,7 +259,7 @@ class ProfileHandler(object):
             profile.stop()
             print "Killed: %s" % key
 
-
+    @cascade
     def merge_profile(self, name):
         '''
         Runs a profile merge right away
