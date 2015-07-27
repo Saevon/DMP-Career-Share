@@ -24,8 +24,10 @@ class DataFile(object):
         self.name = name
         self.path = os.path.join(path, name)
 
-        self.status = self.STATUS_NOT_FOUND
+        self.reset()
 
+    def reset(self):
+        self.status = self.STATUS_NOT_FOUND
         self.data = None
 
     def is_ready(self):
@@ -39,15 +41,63 @@ class DataFile(object):
             self.data = parser.load(fp)
 
     @cascade
-    def save(self, path):
+    def save(self, path=None):
         '''
         Dumps the data to the given path using kerbal format
         '''
-        with open(self.initial_path, 'r') as fp:
+        if path is None:
+            path = self.path
+
+        with open(path, 'w') as fp:
             fp.write(parser.dump(self.data))
 
     def on_parsed(self):
         self.status == self.STATUS_LOADED
+
+class FakeDataFile(DataFile):
+    '''
+    Wrapper around a real datafile, so that we can pretend the data is made up
+    of multiple files
+    '''
+
+    def __init__(self, real_data_file, name):
+        self.name = name
+        self.real_name = name[:-len(".txt")]
+        self.real_data_file = real_data_file
+
+    @property
+    def data(self):
+        for scenario in self.real_data_file.data["GAME"][0]["SCENARIO"]:
+            if scenario["name"] == self.real_name:
+                return scenario
+        raise LookupError(self.name)
+
+    @property
+    def status(self):
+        return self.real_data_file.status
+
+    @property
+    def path(self):
+        return self.real_data_file.path
+
+    @cascade
+    def refresh(self):
+        self.real_data_file.refresh()
+
+    @cascade
+    def save(self, path=None):
+        if path is not None:
+            raise NotImplementedError("Can't save FakeDataFile to a location")
+        self.real_data_file.save()
+
+    @cascade
+    def export(self, path):
+        df = DataFile(name=self.name, path=path)
+        df.data = self.data
+        df.save()
+        df.refresh()
+
+        return df
 
 
 class Profile(object):
@@ -183,6 +233,35 @@ class DualProfile(Profile):
 
         self.initial[path].refresh()
         self.data[path].refresh()
+
+
+class FullSaveProfile(Profile):
+
+    def __init__(self, name, base_path):
+        self.name = name
+        self.base_path = base_path
+
+        self.data_file = DataFile(
+            name,
+            path=self.base_path,
+        ).refresh()
+
+        self.data = {}
+        for scenario in self.data_file.data["GAME"][0]["SCENARIO"]:
+            name = scenario["name"] + ".txt"
+            self.data[name] = FakeDataFile(self.data_file, name)
+
+    @cascade
+    def refresh(self):
+        self.data_file.refresh()
+
+    @cascade
+    def save(self):
+        self.data_file.save()
+
+    @cascade
+    def merge(self):
+        raise NotImplementedError
 
 
 class ProfileHandler(object):
