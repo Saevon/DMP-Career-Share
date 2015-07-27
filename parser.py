@@ -148,6 +148,8 @@ class PostProcessor(object):
             scenarios = data["GAME"][0]["SCENARIO"]
             for scenario in scenarios:
                 self.process_scenario(scenario)
+        elif "name" in data.keys():
+            self.process_scenario(data)
 
         return data
 
@@ -155,14 +157,12 @@ class PostProcessor(object):
         if "name" not in scenario.keys():
             return
 
-        processor = self.PROCESSORS.get("name", False)
+        processor = self.PROCESSORS.get(scenario["name"], False)
         if processor:
-            processor(scenario)
-
+            processor(self, scenario)
 
     @register_processor(PROCESSORS, "ResearchAndDevelopment")
-    @staticmethod
-    def process_rnd(data, scenario):
+    def process_rnd(self, scenario):
         # We know for sure that each tech has a list of parts
         # but the list is a duplication list (therefore sometimes parses as a single item)
         for tech in scenario["Tech"]:

@@ -98,7 +98,6 @@ def _merge(initial, current, server):
     server["ResearchAndDevelopment.txt"].data["sci"] = new_sci
 
 
-
     #########################################
     # Buildings
 
