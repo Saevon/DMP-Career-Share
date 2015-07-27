@@ -84,7 +84,11 @@ def test(name):
 
 if __name__ == '__main__':
     for folder in os.listdir(TEST_PATH):
-        if os.path.isfile(folder):
+        path = os.path.join(TEST_PATH, folder)
+
+        if os.path.isfile(path):
+            continue
+        if not os.path.exists(os.path.join(path, 'explain.txt')):
             continue
 
         print "====================="
