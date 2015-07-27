@@ -73,7 +73,7 @@ class NeutralState(DataState):
         elif val == 'False':
             val = False
         elif is_int(val):
-            val = int(val)
+            val = Decimal(val)
         elif is_float(val):
             val = Decimal(val)
 
@@ -121,6 +121,19 @@ class DictState(DataState):
             )
 
 
+def post_process(data):
+    '''
+    Does special post-processing based on a file schema
+    '''
+    if data["name"] == "ResearchAndDevelopment":
+        # We know for sure that each tech has a list of parts
+        # but the list is a duplication list (therefore sometimes parses as a single item)
+        for tech in data["Tech"]:
+            if not isinstance(tech["part"], list):
+                tech["part"] = DuplicationList([tech["part"]])
+    return data
+
+
 def load(fp, options=None):
     config = {
         # 'verbose': True,
@@ -134,7 +147,7 @@ def load(fp, options=None):
     except State.Error as err:
         raise DMPException.wraps(err)
 
-    return machine.get_data()
+    return post_process(machine.get_data())
 
 def dump(data, options=None):
     config = {

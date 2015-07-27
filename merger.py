@@ -66,14 +66,14 @@ def _merge(initial, current, server):
         server["ResearchAndDevelopment.txt"].data["Tech"],
     )
 
-    sci_refund, new_reports = merge_techs(
-        initial["ResearchAndDevelopment.txt"].data["Tech"],
-        current["ResearchAndDevelopment.txt"].data["Tech"],
-        server["ResearchAndDevelopment.txt"].data["Tech"],
+    sci_refund, new_reports = merge_reports(
+        initial["ResearchAndDevelopment.txt"].data["Science"],
+        current["ResearchAndDevelopment.txt"].data["Science"],
+        server["ResearchAndDevelopment.txt"].data["Science"],
     )
 
     # Update the science refunds based on difficulty
-    new_sci += sci_refund * DIFFICULTY
+    new_sci += (sci_refund * DIFFICULTY)
 
     initial["ResearchAndDevelopment.txt"].data["Tech"] = new_techs
     current["ResearchAndDevelopment.txt"].data["Tech"] = new_techs
@@ -217,7 +217,7 @@ def list_to_map(initial, current, server, id_func=None):
         'current': {},
         'server': {}
     }
-    all_ids = set()
+    all_ids = []
 
     # First create a mapping for techs (for easier comparison)
     mapping = (
@@ -228,7 +228,8 @@ def list_to_map(initial, current, server, id_func=None):
     for data, key in mapping:
         for report in data:
             id = id_func(report)
-            all_ids.add(id)
+            if id not in all_ids:
+                all_ids.append(id)
             item_map[key][id] = report
 
     return item_map, all_ids
@@ -256,6 +257,12 @@ def merge_reports(initial, current, server):
 
     return total_refund, new_reports
 
+def round_length(val, lenght):
+    val = str(val)
+    if len(val) > lenght:
+        val = val[:lenght]
+    return Decimal(val)
+
 
 def merge_report(initial, current, server):
     """
@@ -276,11 +283,11 @@ def merge_report(initial, current, server):
         # User didn't do this, keep server
         return refund, server
 
-    new_report = {}
+    new_report = OrderedDict()
     new_report.update(server)
 
     # Calculate the amount the user gained
-    initial_sci = initial['sci'] if initial is not None else 0
+    initial_sci = initial['sci'] if initial is not None else Decimal(0)
     diff_sci = initial_sci - current['sci']
 
     # Add the user's sci to the server, remembering to refund extra sci
@@ -293,8 +300,9 @@ def merge_report(initial, current, server):
         )
 
     # Update the Data Value to reflect the new percent Done
-    new_report['scv'] = (
-        (new_report['cap'] - new_report['sci']) / new_report['cap']
+    new_report['scv'] = round_length(
+        (new_report['cap'] - new_report['sci']) / new_report['cap'],
+        12,
     )
 
     return refund, new_report
@@ -341,12 +349,12 @@ def merge_tech(initial, current, server):
     if initial is None:
         refund = current["cost"]
 
-    new_tech = {}
+    new_tech = OrderedDict()
     new_tech.update(current)
     new_tech["part"] = DuplicationList()
 
     # Start with the all the parts of the server
-    for part in server:
+    for part in server["part"]:
         new_tech["part"].append(part)
 
     # See what the player changed
