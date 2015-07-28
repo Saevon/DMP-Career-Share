@@ -43,32 +43,93 @@ def parse_options():
     return options
 
 
-JOIN_RE = re.compile(r'Client ([^ ]+?) handshook successfully')
-EXIT_RE = re.compile(r'Client ([^ ]+?) disconnected')
+JOIN_RE = re.compile(r'Client (?P<name>[^ ]+?) handshook successfully')
+EXIT_RE = re.compile(r'(?P<name>[^ ]+?)(( disconnected)|( sent connection end message))')
 DEAD_RE = re.compile(r'Goodbye!')
 
-def reader(profile_handler, line):
-    match = JOIN_RE.match(line)
+
+def reader(profile_handler, players, line):
+    match = JOIN_RE.search(line)
     if match:
-        name = match.group(1)
+        name = match.group('name')
+
 
         # load any new profiles
+        print "=========="
         print "JOIN: %s" % name
+        players[name] = True
+
+        profile_handler.load_profiles()
+        print "----------"
+
+    match = EXIT_RE.search(line)
+    if match:
+        name = match.group('name')
+        print "=========="
+        print "EXIT: %s" % name
+
         profile_handler.load_profiles()
 
-    match = EXIT_RE.match(line)
-    if match:
-        name = match.group(1)
+        players[name] = False
 
-        print "EXIT: %s" % name
-        profile_handler.merge_profile(name)
+        for player, alive in players.iteritems():
+            if not alive:
+                profile_handler.merge_profile(player)
 
-    match = DEAD_RE.match(line)
+        for player, alive in players.iteritems():
+            if not alive:
+                profile_handler.merge_profile(player)
+
+        print "----------"
+
+    match = DEAD_RE.search(line)
     if match:
+        print "=========="
+        print "RESET"
+
+        profile_handler.load_profiles()
+        for player in players.keys():
+            players[player] = False
+
         profile_handler.merge_all()
+        print "----------"
+
+
+def empty(players):
+    for player, isalive in players.iteritems():
+        if not isalive:
+            return False
+    return True
+
+def main(profile_handler):
+    counter = 0
+    players = {}
+
+    for player in profile_handler.get_players():
+            players[player] = False
+
+    if len(select.select([sys.stdin], [], [], 0)):
+        line = sys.stdin.readline()
+        print line,
+
+        try:
+            reader(profile_handler, players, line)
+        except DMPException as err:
+            trace = getattr(err, 'trace', 'NO TRACE')
+            print trace
+
+    elif counter > 30 and empty(players):
+        print "=========="
+        print "RESET"
+        err = profile_handler.merge_all()
+        print "----------"
+    else:
+        sleep(1)
+        counter += 1
 
 
 import select
+from time import sleep
 
 if __name__ == '__main__':
     options = parse_options()
@@ -77,10 +138,7 @@ if __name__ == '__main__':
 
     try:
         while True:
-            if len(select.select([sys.stdin], [], [], 1)):
-                line = sys.stdin.readline()
-                reader(profile_handler, line)
-                print line,
+            main(profile_handler)
     except KeyboardInterrupt:
         print "Exiting"
 

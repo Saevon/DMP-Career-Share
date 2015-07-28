@@ -130,13 +130,19 @@ def _merge(initial, current, server):
         server["ScenarioDestructibles.txt"].data,
     )
     for building, status in new_status.iteritems():
-        initial["ScenarioDestructibles.txt"].data[building][0]["intact"] = status
-        current["ScenarioDestructibles.txt"].data[building][0]["intact"] = status
-        server["ScenarioDestructibles.txt"].data[building][0]["intact"] = status
+        add_or_save_building(initial["ScenarioDestructibles.txt"].data, building)["intact"] = status
 
     errors += new_errors
 
     return errors
+
+def add_or_save_building(data, key):
+    building = data.get(key, None)
+    if not building:
+        data[key] = DuplicationList()
+        building = data[key]
+
+    return building[0]
 
 
 #########################################################################################################################
@@ -144,7 +150,10 @@ def _merge(initial, current, server):
 #########################################################################################################################
 
 def get_building(val, key):
-    return val[key][0]
+    val = val.get(key, None)
+    if val is None:
+        return {}
+    return val[0]
 
 def merge_building_upgrades(initial, current, server):
     buildings = OrderedDict()
@@ -161,21 +170,21 @@ def merge_building_upgrades(initial, current, server):
         if initial_building.get('lvl', None) is None:
             continue
 
-        if current_building["lvl"] != initial_building["lvl"]:
+        if current_building.get("lvl", None) != initial_building.get("lvl", None):
             # User upgraded
-            if initial_building["lvl"] != server_building["lvl"]:
+            if initial_building.get("lvl", None) != server_building.get("lvl", None):
                 # Server upgraded
                 errors.append("WARNING: %(key)s Upgraded twice: player(%(initial)s >> %(current)s) server(%(initial)s >> %(server)s)" % {
                     'key': key,
-                    'initial': initial_building["lvl"],
-                    'current': current_building["lvl"],
-                    'server': server_building["lvl"],
+                    'initial': initial_building.get("lvl", None),
+                    'current': current_building.get("lvl", None),
+                    'server': server_building.get("lvl", None),
                 })
 
-            buildings[key] = max(current_building["lvl"], server_building["lvl"])
+            buildings[key] = max(current_building.get("lvl", None), server_building.get("lvl", None))
         else:
             # Nothing changed, use the server value
-            buildings[key] = server_building["lvl"]
+            buildings[key] = server_building.get("lvl", None)
 
     return buildings, errors
 
@@ -196,9 +205,9 @@ def merge_building_status(initial, current, server):
         if initial_building.get('intact', None) is None:
             continue
 
-        if current_building["intact"] != initial_building["intact"]:
-            if initial_building["intact"] != server_building["intact"]:
-                if not initial_building["intact"]:
+        if current_building.get("intact", None) != initial_building.get("intact", None):
+            if initial_building.get("intact", None) != server_building.get("intact", None):
+                if not initial_building.get("intact", None):
                     # Both server and player fixes something
                     errors.append("WARNING: %s: Fixed by both Player and Server" % key)
 
@@ -208,10 +217,10 @@ def merge_building_status(initial, current, server):
                     buildings[key] = False
             else:
                 # Sever did nothing, keep the player value
-                buildings[key] = current_building["intact"]
+                buildings[key] = current_building.get("intact", None)
         else:
             # Player did nothing, keep the server value
-            buildings[key] = server_building["intact"]
+            buildings[key] = server_building.get("intact", None)
 
     return buildings, errors
 
@@ -400,9 +409,9 @@ def merge_tech(initial, current, server):
 
     # See what the player changed
     for part in current.get("part", []):
-        if initial is not None and part in initial["part"]:
+        if initial is not None and part in initial.get("part", []):
             continue
-        if part in new_tech["part"]:
+        if part in new_tech.get("part", []):
             errors.append("WARNING: Both server and player bought part: %s" % part)
             continue
         new_tech["part"].append(part)

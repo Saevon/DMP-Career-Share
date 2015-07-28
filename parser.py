@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from parser_data import InlineList, DuplicationList
 from state import State, StateMachine
-from type_check import is_int, is_float
+from type_check import is_int, is_float, is_sci_notation
 from format import format
 from error import DMPException
 
@@ -71,6 +71,8 @@ class NeutralState(DataState):
             val = True
         elif val == 'False':
             val = False
+        elif is_sci_notation(val):
+            val = Decimal(val)
         elif is_int(val):
             val = Decimal(val)
         elif is_float(val):

@@ -101,6 +101,8 @@ def format_unnamed(val):
         out = str(val)
     elif isinstance(val, int):
         out = str(val)
+    # elif val == None:
+    #     return None
     else:
         raise NotImplementedError("Can't convert val: %s" % type(val))
 

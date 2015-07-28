@@ -3,15 +3,13 @@
 import os.path
 
 
-from timer import TimerThread
-
-from lib.lock import with_threading_lock, get_threading_lock
 from lib.cascade import cascade
 
 import parser
 import merger
 
 import subprocess
+import termcolor
 
 
 class DataFile(object):
@@ -119,7 +117,7 @@ class Profile(object):
 
     FILE_TIMEOUT = 4
 
-    def __init__(self, name, base_path, enable_timer=False):
+    def __init__(self, name, base_path):
         print "%s New Profile" % (name)
         self.name = name
         self.base_path = base_path
@@ -134,20 +132,11 @@ class Profile(object):
             )
             self.all_files.add(self.data[name])
 
-        self.enable_timer = enable_timer
-        if enable_timer:
-            self.timer = TimerThread(self.on_timer_end)
-            self.timer.start()
-
     @cascade
     def stop(self):
-        try:
-            self.timer.stop()
-        except:
-            pass
+        pass
 
     @cascade
-    @with_threading_lock('data_files')
     def update_file(self, path):
         if path not in self.data:
             return
@@ -155,10 +144,6 @@ class Profile(object):
         print "%s: updated %s" % (self.name, path)
 
         self._update_file(path)
-
-        # # Waits for the timer to finish
-        if self.enable_timer and not self.timer.is_on():
-            self.timer.set(self.FILE_TIMEOUT)
 
     def _update_file(self, path):
         self.data[path].refresh()
@@ -169,7 +154,6 @@ class Profile(object):
         self.merge()
 
     @cascade
-    @with_threading_lock('data_files')
     def merge(self):
         '''
         Merges all the files
@@ -177,13 +161,13 @@ class Profile(object):
         self._merge()
 
         for name in self.ALL_DATA:
+            self.data[name].save()
             self.data[name].on_parsed()
 
     def _merge(self):
         pass
 
     @cascade
-    @with_threading_lock('data_files')
     def refresh(self):
         '''
         Reloads all the data files for the profile
@@ -200,8 +184,8 @@ class DualProfile(Profile):
     def set_server(self, server_profile):
         self.server_profile = server_profile
 
-    def __init__(self, name, base_path, initial_path, enable_timer=False):
-        super(DualProfile, self).__init__(name, base_path, enable_timer)
+    def __init__(self, name, base_path, initial_path):
+        super(DualProfile, self).__init__(name, base_path)
 
         self.initial_path = initial_path
 
@@ -217,21 +201,22 @@ class DualProfile(Profile):
             self.all_files.add(self.initial[key])
 
     def _merge(self):
-        with get_threading_lock(self.server_profile, 'data_files'):
-            errors = merger.merge(self.initial, self.data, self.server_profile.data)
+        errors = merger.merge(self.initial, self.data, self.server_profile.data)
 
-            for error in errors:
-                print error
+        for error in errors:
+            print termcolor.colored(error, 'yellow')
 
-            # Finish the parse
-            for name in self.ALL_DATA:
-                self.server_profile.data.save()
-                self.data[name].save()
-                self.initial[name].save()
+        print "Saving: %s" % self.server_profile.name
+        print "Saving: %s" % self.name
 
-                self.server_profile.data.on_parsed()
-                self.data[name].on_parsed()
-                self.initial[name].on_parsed()
+        # Finish the parse
+        for name in self.ALL_DATA:
+            self.server_profile.data[name].save()
+            self.data[name].save()
+            self.initial[name].save()
+
+            self.data[name].on_parsed()
+            self.initial[name].on_parsed()
 
     def _update_file(self, path):
         if not os.path.exists(self.initial[path].path):
@@ -274,14 +259,12 @@ class ProfileHandler(object):
 
     SERVER_PROFILE = 'Initial'
 
-    def __init__(self, base_path, initial_path, enable_timer=False):
+    def __init__(self, base_path, initial_path):
         super(ProfileHandler, self).__init__()
 
         self.profiles = {}
         self.base_path = base_path
         self.initial_path = initial_path
-
-        self.enable_timer = enable_timer
 
         self.server_profile = None
 
@@ -320,9 +303,9 @@ class ProfileHandler(object):
         '''
         # Create the profile, server is special
         if folder == self.SERVER_PROFILE:
-            profile = Profile(folder, self.base_path, enable_timer=self.enable_timer)
+            profile = Profile(folder, self.base_path)
         else:
-            profile = DualProfile(folder, self.base_path, self.initial_path, enable_timer=self.enable_timer)
+            profile = DualProfile(folder, self.base_path, self.initial_path)
             profile.set_server(self.server_profile)
 
         self.profiles[folder] = profile
@@ -360,7 +343,7 @@ class ProfileHandler(object):
         profile = self.profiles[name]
 
         self.refresh_profile(name)
-        self.refresh_profile("Initial")
+        self.refresh_profile(self.SERVER_PROFILE)
 
         profile.merge()
 
@@ -373,8 +356,11 @@ class ProfileHandler(object):
         # Since each merge updates the current player only to the ones already merged
 
         for key, profile in self.profiles.iteritems():
-            self.merge_profile(profile)
+            self.merge_profile(key)
 
         for key, profile in self.profiles.iteritems():
-            self.merge_profile(profile)
+            self.merge_profile(key)
+
+    def get_players(self):
+        return self.profiles.keys()
 
