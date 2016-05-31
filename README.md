@@ -1,2 +1,2 @@
 # DMP-Career-Share
-Merges DMP career save files
+Merges Dark MultiPlayer career save files for KSP
